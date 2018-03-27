@@ -9,9 +9,9 @@
  */
 
 /*
-	available figures:
+    available figures:
 
-	circle { r: radius }
+    circle { r: radius }
     rectangle { a: first side, b: second side }
     square { a: side of a square }
     triangle { a: base, h: height }
