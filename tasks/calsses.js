@@ -52,12 +52,23 @@ class Developer extends Employee {
 		this._manager = undefined;
 	}
 
-	get manager() {
+	getManager() {
 		return this._manager;
 	}
 
-	set manager(newManager) {
-		this._manager = newManager;
+	setManager(newManager) {
+		if(newManager instanceof Manager) {
+			if(newManager !== this._manager) {
+				this._manager = newManager;
+				newManager.addDeveloper(this);
+			}
+		} else {
+			throw new Error();
+		}
+	}
+
+	deleteManager() {
+		this._manager = undefined;
 	}
 }
 
@@ -67,21 +78,28 @@ class Manager extends Employee {
 		this._developers = [];
 	}
 
-	get developers() {
+	getDevelopers() {
 		return this._developers;
 	}
 
 	addDeveloper(newDeveloper) {
-		const developerIndex = this._developers.indexOf(newDeveloper);
-		if (developerIndex === -1) {
-			this._developers.push(newDeveloper);
+		if(newDeveloper instanceof Developer) {
+			const developerIndex = this._developers.indexOf(newDeveloper);
+			if (developerIndex === -1) {
+				this._developers.push(newDeveloper);
+				newDeveloper.setManager(this);
+			}
+		} else {
+			throw new Error();
 		}
 	}
 
 	deleteDeveloper(developer) {
-		const developerIndex = this._developers.indexOf(developer);
-		if (developerIndex !== -1) {
-			this._developers.splice(developerIndex, 1);
+		if(developer instanceof Developer) {
+			this._developers = this._developers.filter(item => item !== developer);
+			developer.deleteManager();
+		} else {
+			throw new Error();
 		}
 	}
 }
@@ -90,8 +108,13 @@ let vasya = new Manager('Vasya', 29, '20.09.1988', 50000, 'Отдел разра
 let petya = new Developer('Petya', 25, '21.09.1992', 25000, 'Отдел разработки');
 let kolya = new Developer('Kolya', 26, '22.09.1992', 26000, 'Отдел разработки');
 
-petya.manager = vasya;
-
-vasya.addDeveloper(petya);
 vasya.addDeveloper(kolya);
-vasya.deleteDeveloper(petya);
+petya.setManager(vasya);
+console.log(vasya);
+console.log(petya);
+console.log(kolya);
+
+vasya.deleteDeveloper(kolya);
+console.log(vasya);
+console.log(petya);
+console.log(kolya);
