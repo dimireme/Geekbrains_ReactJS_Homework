@@ -1,2 +1,6 @@
 # Geekbrains_ReactJS_Homework
-Homework on the course React.JS from the site geekbrains.ru
+Домашняя работа по курсу React.JS с сайта <a href="https://geekbrains.ru">geekbrains.ru</a>.
+
+## 1. Введение в React JS
+
+Каждая задача выполнена в отдельном файле. Чтобы проверить работоспособность кода, раскомментируйте соответствующую строчку в файле **index.html**. Результат выводится в DOM или в консоль браузера.
