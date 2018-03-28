@@ -1,11 +1,21 @@
-module.exports = class Human {
-	constructor(name, age, dateOfBirth) {
-		this.name = name;
+class Human {
+	constructor(firstName, lastName, age) {
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.age = age;
-		this.dateOfBirth = dateOfBirth;
+	}
+
+	get fullName() {
+		return `${this.firstName} ${this.lastName}`;
+	}
+
+	set fullname(fullName) {
+		[this.firstName, this.lastName] = fullName.split(' ');
 	}
 
 	displayInfo() {
-		return `Имя: ${this.name}. Возраст: ${this.age}. Дата рождения: ${this.dateOfBirth}.`;
+		return `Имя: ${this.fullName}. Возраст: ${this.age}.`;
 	}
 }
+
+module.exports = Human;
