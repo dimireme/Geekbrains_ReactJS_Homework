@@ -1,0 +1,78 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+#app,
+.wrapper {
+    height: 100%;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+}
+
+/* HEADER */
+.page-header {
+    background-color: cornflowerblue;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    padding: 10px;
+}
+
+.page-header .logo {
+    cursor: pointer;
+}
+
+/* LOGIN FORM */
+.login {
+    background-color: blueviolet;
+    padding: 5px;
+}
+
+.login .modal-container {
+    position: relative;
+}
+
+.login .modal-container .modal,
+.login .modal-container .modal-backdrop {
+    position: absolute;
+}
+
+
+/* MAIN MENU */
+.page-menu {
+    background-color: bisque;
+    padding: 5px;
+    flex-grow: 1;
+    font-size: 1.25em;
+}
+
+/* CONTAINER */
+.main-container {
+    background-color: antiquewhite;
+    flex-grow: 1;
+    padding: 10px;
+}
+
+/* FOOTER */
+.page-footer {
+    background-color: coral;
+    min-height: 100px;
+    padding: 10px;
+}
+
+/* ASIDE MENU */
+.aside-menu {
+    float: left;
+    margin: 20px;
+    padding: 5px;
+    background-color: cadetblue;
+    font-size: 1.25em;
+}
