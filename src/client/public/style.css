@@ -1,0 +1,30 @@
+html,
+body,
+#app {
+    height: 100%;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+}
+
+header,
+main,
+footer {
+    padding: 0 20px;
+}
+
+header {
+    background-color: bisque;
+}
+
+main {
+    flex-grow: 1;
+    background-color: azure;
+}
+
+footer {
+    line-height: 3em;
+}
