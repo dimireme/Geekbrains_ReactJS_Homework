@@ -25,6 +25,11 @@ module.exports = {
 				test: /\.jsx?/,
 				include: path.join(__dirname, 'src', 'client', 'app'),
 				use: 'babel-loader'
+			},
+			{
+				test: /\.css$/,
+				include: /node_modules/,
+				loaders: ['style-loader', 'css-loader'],
 			}
 		]
 	},
