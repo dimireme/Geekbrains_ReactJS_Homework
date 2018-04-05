@@ -31,4 +31,5 @@ module.exports = {
 
 	// enable defaults for development environment
 	mode: 'development'
+
 };
