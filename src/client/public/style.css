@@ -10,14 +10,9 @@ body,
     min-height: 100%;
 }
 
-header,
 main,
 footer {
     padding: 0 20px;
-}
-
-header {
-    background-color: bisque;
 }
 
 main {
@@ -27,4 +22,13 @@ main {
 
 footer {
     line-height: 3em;
+}
+
+.pokemon-small {
+    overflow: hidden;
+}
+.pokemon-small img {
+    width: 50px;
+    transform: scale(2);
+    padding: 0 5px;
 }

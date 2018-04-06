@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
 
 	// Точка входа приложения
-	entry: path.join(__dirname, 'src', 'client', 'app', 'index'),
+	entry: ['babel-polyfill', path.join(__dirname, 'src', 'client', 'app', 'index')],
 
 	// Результат сборки
 	output: {
