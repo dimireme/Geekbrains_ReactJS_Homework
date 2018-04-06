@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -12,42 +12,35 @@ class App extends Component {
 		super(props);
 
 		this.state = {
-			myPokemon: {},
+			myPokemon: {
+				name: 'Unknown',
+				src: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png'
+			},
 		};
 	}
 
-	async componentWillMount() {
+	componentWillMount() {
 		const id = Math.floor(Math.random() * 200) + 1;
 
-		try {
-			const shapes = await fetch(`https://www.pokeapi.co/api/v2/pokemon-form/${id}`)
-			.then(res => res.json());
-
-			const src = shapes.sprites.front_default;
-			const name = shapes.name;
-
-			const ability = await fetch(`https://www.pokeapi.co/api/v2/ability/${id}`)
-			.then(res => res.json());
-
-			const effect = ability.effect_entries[0].effect;
-
-			this.setState({
-				myPokemon: {
-					src: src,
-					name: name,
-					effect: effect
-				}
-			});
-		} catch (err) {
-			console.log(err);
-		}
+		fetch(`https://www.pokeapi.co/api/v2/pokemon-form/${id}`)
+			.then(res => res.json())
+			.then(shapes => {
+				this.setState({
+					myPokemon: {
+						src: shapes.sprites.front_default,
+						name: shapes.name
+					}
+				})
+			})
+			.catch(err => console.log(`Failed fetch: ${err}`))
 	}
 
 	render() {
-		const { myPokemon } = this.state;
+		const pokemon = this.state.myPokemon;
+		console.log(pokemon);
 		return (
 			<div className="container">
-				<Header pokemon={myPokemon} />
+				<Header pokemon={pokemon} />
 				<Main />
 				<Footer />
 			</div>

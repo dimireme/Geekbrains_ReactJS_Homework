@@ -1,27 +1,22 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Nav, Navbar, NavbarBrand, NavLink } from 'reactstrap';
 
 import PokemonSmall from './PokemonSmall';
-import DescriptionModal from './DescriptionModal';
 
 export default class Header extends Component {
 	static propTypes = {
 		pokemon: PropTypes.shape({
 			name: PropTypes.string,
 			src: PropTypes.string,
-			effect: PropTypes.string,
 		}),
-		navLinks: PropTypes.array
+		links: PropTypes.array
 	};
 
 	static defaultProps = {
-		pokemon: {
-			name: 'Unknown',
-			src: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png'
-		},
-		navLinks: [
+		links: [
 			{ text: 'Новая игра',   link: '#' },
 			{ text: 'Правила игры', link: '#' },
 			{ text: 'Контакты',	    link: '#' }
@@ -32,19 +27,21 @@ export default class Header extends Component {
 		super(props);
 
 		this.state = {
-			pokemon: this.props.pokemon,
+			links: props.links,
+			myPokemon: props.pokemon,
 			modal: false
 		};
 	};
 
-/*	componentDidMount(){
+	componentWillReceiveProps(){
 		this.setState({
+			myPokemon: this.props.pokemon,
 			modal: true
 		});
-	}*/
+	};
+
 
 	toggle = (e) => {
-		console.log(this.state.modal);
 		this.setState({
 			modal: !this.state.modal
 		});
@@ -52,17 +49,28 @@ export default class Header extends Component {
 	};
 
 	render() {
-		const { pokemon, navLinks } = this.props;
 		return (
 			<Navbar className="navbar-dark bg-dark">
 				<NavbarBrand href="/" onClick={this.toggle} >
-					<PokemonSmall {...pokemon} />
+					<PokemonSmall {...this.state.pokemon} />
 				</NavbarBrand>
 
-				<DescriptionModal pokemon={pokemon} context={this} />
+				<Modal isOpen={this.state.modal} toggle={this.toggle} >
+					<ModalHeader toggle={this.toggle}>
+						<PokemonSmall {...this.state.pokemon} />
+					</ModalHeader>
+					<ModalBody>
+						{
+							//<Description {...this.state.pokemon} />
+						}
+					</ModalBody>
+					<ModalFooter>
+						<Button color="secondary" onClick={this.toggle}>Cancel</Button>
+					</ModalFooter>
+				</Modal>
 
 				<Nav className="ml-auto">
-					{navLinks.map( (item, index) => {
+					{this.state.links.map( (item, index) => {
 						return (
 							<NavLink href={item.link} key={`nav-${index}`} className="text-light">
 								{item.text}
