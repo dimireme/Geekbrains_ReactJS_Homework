@@ -5,6 +5,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Nav, Navbar, NavbarBrand, NavLink } from 'reactstrap';
 
 import PokemonSmall from './PokemonSmall';
+import DescriptionContainer from '../containers/DescriptionCotainer';
 
 export default class Header extends Component {
 	static propTypes = {
@@ -25,7 +26,6 @@ export default class Header extends Component {
 
 	constructor(props) {
 		super(props);
-
 		this.state = {
 			links: props.links,
 			myPokemon: props.pokemon,
@@ -33,9 +33,9 @@ export default class Header extends Component {
 		};
 	};
 
-	componentWillReceiveProps(){
+	componentWillReceiveProps(nextProps){
 		this.setState({
-			myPokemon: this.props.pokemon,
+			myPokemon: nextProps.pokemon,
 			modal: true
 		});
 	};
@@ -52,16 +52,16 @@ export default class Header extends Component {
 		return (
 			<Navbar className="navbar-dark bg-dark">
 				<NavbarBrand href="/" onClick={this.toggle} >
-					<PokemonSmall {...this.state.pokemon} />
+					<PokemonSmall {...this.state.myPokemon} />
 				</NavbarBrand>
 
 				<Modal isOpen={this.state.modal} toggle={this.toggle} >
 					<ModalHeader toggle={this.toggle}>
-						<PokemonSmall {...this.state.pokemon} />
+						<PokemonSmall {...this.state.myPokemon} />
 					</ModalHeader>
 					<ModalBody>
 						{
-							//<Description {...this.state.pokemon} />
+						//	<DescriptionContainer name={this.state.myPokemon.name}/>
 						}
 					</ModalBody>
 					<ModalFooter>

@@ -37,7 +37,6 @@ class App extends Component {
 
 	render() {
 		const pokemon = this.state.myPokemon;
-		console.log(pokemon);
 		return (
 			<div className="container">
 				<Header pokemon={pokemon} />
