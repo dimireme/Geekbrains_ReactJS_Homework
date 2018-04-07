@@ -5,13 +5,14 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Nav, Navbar, NavbarBrand, NavLink } from 'reactstrap';
 
 import PokemonSmall from './PokemonSmall';
-import DescriptionContainer from '../containers/DescriptionCotainer';
+import DescriptionContainer from '../containers/DescriptionContainer';
 
 export default class Header extends Component {
 	static propTypes = {
 		pokemon: PropTypes.shape({
 			name: PropTypes.string,
 			src: PropTypes.string,
+			id: PropTypes.number
 		}),
 		links: PropTypes.array
 	};
@@ -28,7 +29,7 @@ export default class Header extends Component {
 		super(props);
 		this.state = {
 			links: props.links,
-			myPokemon: props.pokemon,
+			myPokemon: props.pokemon || defaultPokemon,
 			modal: false
 		};
 	};
@@ -60,9 +61,7 @@ export default class Header extends Component {
 						<PokemonSmall {...this.state.myPokemon} />
 					</ModalHeader>
 					<ModalBody>
-						{
-						//	<DescriptionContainer name={this.state.myPokemon.name}/>
-						}
+						{/*<DescriptionContainer id={this.state.myPokemon.id}/>*/}
 					</ModalBody>
 					<ModalFooter>
 						<Button color="secondary" onClick={this.toggle}>Cancel</Button>

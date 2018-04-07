@@ -5,32 +5,33 @@ import Description from '../components/Description';
 
 export default class DescriptionContainer extends PureComponent {
 	static propTypes = {
-		name: PropTypes.string.isRequired
+		id: PropTypes.number.isRequired
 	};
 
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			name: this.props.name,
-			text: ''
+			id: this.props.id,
+			effects: undefined
 		}
 	};
 
-	componentWillMount() {
-		fetch(`https://www.pokeapi.co/api/v2/ability/${this.state.name}`)
+	componentWillReceiveProps() {
+		fetch(`https://www.pokeapi.co/api/v2/ability/${this.state.id}`)
 		.then(res => res.json())
 		.then(ability => {
-			const effects = ability.effect_entries[0];
+			console.log(ability);
 			this.setState({
-				text: `${effects.short_effect} \n${effects.effect}`,
+				effects: ability.effect_entries[0]
 			});
-		});
+		})
+		.catch(err => console.log(`Failed ability fetch: ${err}`))
 	};
 
 	render() {
 		return (
-			<Description text={this.state.text}  />
+			<Description effects={this.state.effects} />
 		)
 	}
 }

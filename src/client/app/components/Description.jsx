@@ -1,9 +1,15 @@
-import React, {PureComponent} from 'react';
+import React from 'react';
 
-export default function(text='Loading...') {
+export default function(effects) {
+	if(!effects) {
+		return (
+			<p>Loading...</p>
+		);
+	}
 	return (
 		<div>
-			{ text }
+			<p>{ effects.short_effect }</p>
+			<p>{ effects.effect }</p>
 		</div>
 	);
 }

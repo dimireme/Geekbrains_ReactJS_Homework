@@ -14,8 +14,9 @@ class App extends Component {
 		this.state = {
 			myPokemon: {
 				name: 'Unknown',
-				src: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png'
-			},
+				src: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png',
+				id: undefined
+			}
 		};
 	}
 
@@ -24,22 +25,22 @@ class App extends Component {
 
 		fetch(`https://www.pokeapi.co/api/v2/pokemon-form/${id}`)
 			.then(res => res.json())
-			.then(shapes => {
+			.then(pokemon => {
 				this.setState({
 					myPokemon: {
-						src: shapes.sprites.front_default,
-						name: shapes.name
+						src: pokemon.sprites.front_default,
+						name: pokemon.name,
+						id: pokemon.id
 					}
 				})
 			})
-			.catch(err => console.log(`Failed fetch: ${err}`))
+			.catch(err => console.log(`Failed pokemon-form fetch: ${err}`))
 	}
 
 	render() {
-		const pokemon = this.state.myPokemon;
 		return (
 			<div className="container">
-				<Header pokemon={pokemon} />
+				<Header pokemon={this.state.myPokemon} />
 				<Main />
 				<Footer />
 			</div>
