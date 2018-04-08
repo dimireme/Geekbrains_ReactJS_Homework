@@ -1,16 +1,11 @@
 import React from 'react';
 
-export default function(effects) {
-	console.log(effects);
-	if(!effects) {
-		return (
-			<p>Loading...</p>
-		);
-	}
+export default function ({short_effect, effect}) {
+	console.log(arguments);
 	return (
 		<div>
-			<p>{ effects.short_effect }</p>
-			<p>{ effects.effect }</p>
+			<p>{ short_effect} </p>
+			<p>{ effect} </p>
 		</div>
-	);
+	)
 }

@@ -9,38 +9,22 @@ import DescriptionContainer from '../containers/DescriptionContainer';
 
 export default class Header extends Component {
 	static propTypes = {
+		links: PropTypes.array.isRequired,
 		pokemon: PropTypes.shape({
-			name: PropTypes.string,
-			src: PropTypes.string,
-			id: PropTypes.number
+			img: PropTypes.string.isRequired,
+			name: PropTypes.string.isRequired,
+			id: PropTypes.number.isRequired,
 		}),
-		links: PropTypes.array
-	};
-
-	static defaultProps = {
-		links: [
-			{ text: 'Новая игра',   link: '#' },
-			{ text: 'Правила игры', link: '#' },
-			{ text: 'Контакты',	    link: '#' }
-		]
 	};
 
 	constructor(props) {
 		super(props);
+
+		// По умолчанию показываем модальное окно
 		this.state = {
-			links: props.links,
-			myPokemon: props.pokemon || defaultPokemon,
-			modal: false
+			modal: true
 		};
 	};
-
-	componentWillReceiveProps(nextProps){
-		this.setState({
-			myPokemon: nextProps.pokemon,
-			modal: true
-		});
-	};
-
 
 	toggle = (e) => {
 		this.setState({
@@ -52,24 +36,24 @@ export default class Header extends Component {
 	render() {
 		return (
 			<Navbar className="navbar-dark bg-dark">
-				<NavbarBrand href="/" onClick={this.toggle} >
-					<PokemonSmall {...this.state.myPokemon} />
-				</NavbarBrand>
-
 				<Modal isOpen={this.state.modal} toggle={this.toggle} >
 					<ModalHeader toggle={this.toggle}>
-						<PokemonSmall {...this.state.myPokemon} />
+						<PokemonSmall {...this.props.pokemon} />
 					</ModalHeader>
 					<ModalBody>
-						{ this.state.myPokemon.id ? <DescriptionContainer id={this.state.myPokemon.id}/> : 'Load...'}
+						<DescriptionContainer id={this.props.pokemon.id}/>
 					</ModalBody>
 					<ModalFooter>
 						<Button color="secondary" onClick={this.toggle}>Cancel</Button>
 					</ModalFooter>
 				</Modal>
 
+				<NavbarBrand href="/" onClick={this.toggle} >
+					<PokemonSmall {...this.props.pokemon} />
+				</NavbarBrand>
+
 				<Nav className="ml-auto">
-					{this.state.links.map( (item, index) => {
+					{this.props.links.map( (item, index) => {
 						return (
 							<NavLink href={item.link} key={`nav-${index}`} className="text-light">
 								{item.text}

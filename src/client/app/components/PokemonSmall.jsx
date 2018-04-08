@@ -1,9 +1,9 @@
 import React from 'react';
 
-export default function ({ src, name }) {
+export default function ({ img, name }) {
 	return (
 		<div className="pokemon-small">
-			<img src={src} alt={name}/> {name}
+			<img src={img} alt={name}/> {name}
 		</div>
 	);
 }
