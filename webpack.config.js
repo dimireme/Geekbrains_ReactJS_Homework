@@ -1,6 +1,8 @@
 const path = require('path');
 
 module.exports = {
+	// Используем инструмент разработчика source-map для отладки ошибок в исходниках.
+	devtool: 'source-map',
 
 	// Точка входа приложения
 	entry: ['babel-polyfill', path.join(__dirname, 'src', 'client', 'app', 'index')],
@@ -32,6 +34,15 @@ module.exports = {
 				loaders: ['style-loader', 'css-loader'],
 			}
 		]
+	},
+
+	// Конфиг для webpack-dev-server. В contentBase указывается путь, который будет доступен по http://localhost:port
+	// Команда на запуск сервера прописана в package.json:
+	// npm run start:dev
+	devServer: {
+		contentBase: path.join(__dirname, 'src', 'client', 'public'),
+		compress: true,
+		port: 9000
 	},
 
 	// enable defaults for development environment

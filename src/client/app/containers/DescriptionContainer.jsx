@@ -17,11 +17,10 @@ export default class DescriptionContainer extends PureComponent {
 		}
 	};
 
-	componentWillReceiveProps() {
+	componentWillMount() {
 		fetch(`https://www.pokeapi.co/api/v2/ability/${this.state.id}`)
 		.then(res => res.json())
 		.then(ability => {
-			console.log(ability);
 			this.setState({
 				effects: ability.effect_entries[0]
 			});
@@ -31,7 +30,9 @@ export default class DescriptionContainer extends PureComponent {
 
 	render() {
 		return (
-			<Description effects={this.state.effects} />
+			<div>
+				<Description effects={this.state.effects} />
+			</div>
 		)
 	}
 }

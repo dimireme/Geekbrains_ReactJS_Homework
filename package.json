@@ -4,6 +4,7 @@
   "description": "Pokemon application",
   "main": "index.js",
   "scripts": {
+    "start:dev": "webpack-dev-server",
     "test": "echo \"Error: no test specified\" && exit 1",
     "webpack": "webpack"
   },
@@ -27,7 +28,8 @@
     "css-loader": "^0.28.11",
     "style-loader": "^0.20.3",
     "webpack": "^4.5.0",
-    "webpack-cli": "^2.0.14"
+    "webpack-cli": "^2.0.14",
+    "webpack-dev-server": "^3.1.2"
   },
   "dependencies": {
     "bootstrap": "^4.0.0",

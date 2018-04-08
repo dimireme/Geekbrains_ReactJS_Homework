@@ -1,6 +1,7 @@
 import React from 'react';
 
 export default function(effects) {
+	console.log(effects);
 	if(!effects) {
 		return (
 			<p>Loading...</p>

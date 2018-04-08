@@ -61,7 +61,7 @@ export default class Header extends Component {
 						<PokemonSmall {...this.state.myPokemon} />
 					</ModalHeader>
 					<ModalBody>
-						{/*<DescriptionContainer id={this.state.myPokemon.id}/>*/}
+						{ this.state.myPokemon.id ? <DescriptionContainer id={this.state.myPokemon.id}/> : 'Load...'}
 					</ModalBody>
 					<ModalFooter>
 						<Button color="secondary" onClick={this.toggle}>Cancel</Button>
