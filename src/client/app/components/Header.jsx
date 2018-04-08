@@ -4,9 +4,6 @@ import PropTypes from 'prop-types';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Nav, Navbar, NavbarBrand, NavLink } from 'reactstrap';
 
-import PokemonSmall from './PokemonSmall';
-import DescriptionContainer from '../containers/DescriptionContainer';
-
 export default class Header extends Component {
 	static propTypes = {
 		links: PropTypes.array.isRequired,
@@ -14,6 +11,10 @@ export default class Header extends Component {
 			img: PropTypes.string.isRequired,
 			name: PropTypes.string.isRequired,
 			id: PropTypes.number.isRequired,
+			effects: PropTypes.shape({
+				short_effect: PropTypes.string.isRequired,
+				effect: PropTypes.string.isRequired
+			})
 		}),
 	};
 
@@ -34,26 +35,31 @@ export default class Header extends Component {
 	};
 
 	render() {
+		const { pokemon, links } = this.props;
+		const { modal } = this.state;
 		return (
 			<Navbar className="navbar-dark bg-dark">
-				<Modal isOpen={this.state.modal} toggle={this.toggle} >
-					<ModalHeader toggle={this.toggle}>
-						<PokemonSmall {...this.props.pokemon} />
+				<Modal isOpen={modal} toggle={this.toggle} >
+					<ModalHeader toggle={this.toggle} className="pokemon-small">
+						<img src={pokemon.img} alt={pokemon.name}/> {pokemon.name}
 					</ModalHeader>
 					<ModalBody>
-						<DescriptionContainer id={this.props.pokemon.id}/>
+						<div>
+							<p>{ pokemon.effects.short_effect } </p>
+							<p>{ pokemon.effects.effect} </p>
+						</div>
 					</ModalBody>
 					<ModalFooter>
 						<Button color="secondary" onClick={this.toggle}>Cancel</Button>
 					</ModalFooter>
 				</Modal>
 
-				<NavbarBrand href="/" onClick={this.toggle} >
-					<PokemonSmall {...this.props.pokemon} />
+				<NavbarBrand href="/" onClick={this.toggle} className="pokemon-small" >
+					<img src={pokemon.img} alt={pokemon.name}/> {pokemon.name}
 				</NavbarBrand>
 
 				<Nav className="ml-auto">
-					{this.props.links.map( (item, index) => {
+					{links.map( (item, index) => {
 						return (
 							<NavLink href={item.link} key={`nav-${index}`} className="text-light">
 								{item.text}

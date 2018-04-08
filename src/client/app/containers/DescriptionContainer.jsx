@@ -18,6 +18,12 @@ export default class DescriptionContainer extends PureComponent {
 	};
 
 	componentWillReceiveProps(nextProps) {
+		console.log('props');
+/*		this.setState({
+		    isLoaded: false
+		});*/
+
+
 		if(nextProps.id !== 0) {
 			fetch(`https://www.pokeapi.co/api/v2/ability/${nextProps.id}`)
 			.then(res => res.json())
@@ -32,36 +38,9 @@ export default class DescriptionContainer extends PureComponent {
 	};
 
 	render() {
-		console.log(this.state.effects);
 		const isLoaded = this.state.isLoaded;
 		const effects = this.state.effects;
+		//const { isLoaded, effects } = this.state;
 		return isLoaded ? <Description {...effects} /> : 'Loading...'
 	}
 }
-/*
- if(isLoading) {
- return (
- <div>
- <p>{effects.short_effect}</p>
- <p>{effects.effect}</p>
- </div>
- )
- }
- return 'Loading...';
- */
-
-/*
- render() {
- let isLoading = this.state.isLoading;
- let effects = this.state.effects;
- if(isLoading) {
- return (
- <div>
- <p>{effects.short_effect}</p>
- <p>{effects.effect}</p>
- </div>
- )
- }
- return 'Loading...';
- }
- */

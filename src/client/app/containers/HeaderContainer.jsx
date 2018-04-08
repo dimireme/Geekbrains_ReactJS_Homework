@@ -5,24 +5,25 @@ import Header from '../components/Header';
 export default class HeaderContainer extends Component {
 	constructor(props) {
 		super(props);
+
 		this.state = {
 			links: defaultLinks,
 			pokemon: defaultPokemon,
-			modal: false
 		};
 	};
 
 	componentWillMount() {
 		const id = Math.floor(Math.random() * 200) + 1;
 
-		fetch(`https://www.pokeapi.co/api/v2/pokemon-form/${id}`)
+		fetch(`https://www.pokeapi.co/api/v2/ability/${id}`)
 		.then(res => res.json())
 		.then(pokemon => {
 			this.setState({
 				pokemon: {
-					img: pokemon.sprites.front_default,
 					name: pokemon.name,
-					id: pokemon.id
+					img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`,
+					id: pokemon.id,
+					effects: pokemon.effect_entries[0]
 				},
 			})
 		})
@@ -30,8 +31,9 @@ export default class HeaderContainer extends Component {
 	}
 
 	render() {
+		const { links, pokemon } = this.state;
 		return (
-			<Header links={this.state.links} pokemon={this.state.pokemon} />
+			<Header links={links} pokemon={pokemon} />
 		);
 	}
 }
@@ -45,5 +47,9 @@ const defaultLinks = [
 const defaultPokemon = {
 	name: 'Unknown',
 	img: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png',
-	id: 0
+	id: 0,
+	effects: {
+		short_effect: '',
+		effect: ''
+	}
 };
