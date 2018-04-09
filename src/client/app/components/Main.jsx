@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 
+import PokemonListContainer from '../containers/PokemonListContainer'
 
 export default class Main extends Component {
 	render() {
 		return (
 			<main>
-				<h2>This is main page</h2>
+				<PokemonListContainer />
 			</main>
 		);
 	}

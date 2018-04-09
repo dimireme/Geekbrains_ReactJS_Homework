@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function ({ img, name }) {
 	return (
-		<div className="pokemon-small">
+		<div>
 			<img src={img} alt={name}/> {name}
 		</div>
 	);
