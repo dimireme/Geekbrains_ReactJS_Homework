@@ -32,3 +32,21 @@ footer {
     transform: scale(2);
     padding: 0 5px;
 }
+
+.pokemon-container {
+    max-width: 800px;
+    min-height: 116px;
+    margin: 20px auto;
+    padding: 10px 20px;
+    border: 1px solid lightslategrey;
+    border-radius: 20px;
+}
+
+.pokemon-container img {
+    float: left;
+    padding-right: 20px;
+}
+
+.pokemon-container h5 {
+    text-transform: capitalize;
+}
