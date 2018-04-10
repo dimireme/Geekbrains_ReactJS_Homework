@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
@@ -6,7 +6,7 @@ import { Nav, Navbar, NavbarBrand, NavLink } from 'reactstrap';
 
 import Description from './Description';
 
-export default class Header extends Component {
+export default class Header extends PureComponent {
 	static propTypes = {
 		links: PropTypes.array.isRequired,
 		pokemon: PropTypes.shape({

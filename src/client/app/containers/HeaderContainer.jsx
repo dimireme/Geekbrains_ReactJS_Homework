@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React, { PureComponent } from 'react';
 
 import Header from '../components/Header';
 
-export default class HeaderContainer extends Component {
+export default class HeaderContainer extends PureComponent {
 	constructor(props) {
 		super(props);
 

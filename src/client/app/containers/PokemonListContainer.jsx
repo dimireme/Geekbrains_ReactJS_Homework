@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 
 import PokemonList from '../components/PokemonList';
-import PropTypes from 'prop-types';
 
 export default class PokemonListContainer extends PureComponent {
 	constructor(props) {
