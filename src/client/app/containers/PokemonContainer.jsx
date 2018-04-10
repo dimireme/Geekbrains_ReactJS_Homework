@@ -3,6 +3,12 @@ import PropTypes from 'prop-types';
 
 import Pokemon from '../components/Pokemon';
 
+/*
+	В state компонента есть парамер status, который принимает значения:
+        'HIDE' - не показывать детальную информацию о покемоне
+        'LOADING' - показать сообщение о начале загрузки
+        'LOADED' - показать детальную информацию о покемоне
+ */
 export default class PokemonContainer extends PureComponent {
 	static propTypes = {
 		pokemon: PropTypes.shape({
@@ -17,20 +23,21 @@ export default class PokemonContainer extends PureComponent {
 		super(props);
 
 		this.state = {
-			isLoaded: true,
 			pokemon: {...props.pokemon, details: undefined},
+			status: 'HIDE'
 		}
 	}
 
 	detailsShowHandler = (detailsSource) => {
-		//  Если данные уже есть в state, меняем флаг isLoaded, компонент перерисуется с данными из state.
 		if(this.state.pokemon.details) {
+			// Если данные уже есть в state, меняем флаг status, компонент перерисуется с данными из state.
 			this.setState({
-				isLoaded: true
+				status: 'LOADED'
 			});
 		} else {
+			// Выводим сообщение о том что загрузка началась.
 			this.setState({
-				isLoaded: false
+				status: 'LOADING'
 			});
 
 			fetch(detailsSource)
@@ -39,7 +46,7 @@ export default class PokemonContainer extends PureComponent {
 				this.setState((prevState) => {
 					return {
 						pokemon: {...prevState.pokemon, details: details.effect_entries[0]},
-			            isLoaded: true,
+						status: 'LOADED'
 					};
 				});
 			})
@@ -48,8 +55,9 @@ export default class PokemonContainer extends PureComponent {
 	};
 
 	detailsHideHandler = () => {
+		// Просто прячем описание, данные остаются в state.
 		this.setState({
-			isLoaded: false
+			status: 'HIDE'
 		});
 	};
 

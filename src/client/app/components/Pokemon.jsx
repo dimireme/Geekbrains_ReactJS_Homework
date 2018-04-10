@@ -17,7 +17,7 @@ export default class Pokemon extends PureComponent {
 		}),
 		detailsShowHandler: PropTypes.func.isRequired,
 		detailsHideHandler: PropTypes.func.isRequired,
-		isLoaded: PropTypes.bool
+		status: PropTypes.string.isRequired
 	};
 
 	onShowClick = (e) => {
@@ -26,6 +26,7 @@ export default class Pokemon extends PureComponent {
 		if (typeof detailsShowHandler === 'function') {
 			detailsShowHandler(this.props.pokemon.detailsSource);
 		}
+
 		e.preventDefault();
 	};
 
@@ -40,29 +41,37 @@ export default class Pokemon extends PureComponent {
 	};
 
 	render() {
-		const { pokemon, isLoaded } = this.props;
+		const { pokemon, status } = this.props;
 		const { name, img, details } = pokemon;
 
-		// если нет деталей, но данные загружены, значит запроса на сервер не было. Отображаем ссылку для запроса.
-		// если нет деталей, но данные не загружены, то запрос отправлен, выводим 'Loading...'
-		// если есть детали и данные загружены, то пришел ответ с сервера, выводим данные.
-		// если есть детали, но данные не загружены, значит запрос был давно, пользователь нажал кнопку 'Скрыть детали'.
-		//      Чтобы скрыть детали, меняем флаг isLoaded.
-		//      Данные сохраняются в state компонента, посторно на сервер запрос не отправляется.
-		return (
-			<div className="card m-2">
-				<div className="card-body">
-					<h5 className="card-title"><img src={img} alt={name}/> {name}</h5>
-					{ (!details) ? (isLoaded ? <a href="#" className="card-link" onClick={this.onShowClick}>Show details...</a>
-											 : <p className="card-text">Loading details...</p>)
- 						         : (isLoaded ? (<div>
-													<Description {...details}/>
-													<a href="#" className="card-link" onClick={this.onHideClick}>Hide details</a>
-												</div>)
-							                 : <a href="#" className="card-link" onClick={this.onShowClick}>Show details...</a>)
-					}
+		if(status === 'HIDE') {
+			return (
+				<div className="pokemon-container">
+					<img src={img} alt={name}/>
+					<h5>{name}</h5>
+					<a href="#" onClick={this.onShowClick}>Show details...</a>
 				</div>
-			</div>
-		)
+			)
+		}
+		if(status === 'LOADING') {
+			return (
+				<div className="pokemon-container">
+					<img src={img} alt={name}/>
+					<h5>{name}</h5>
+					<p>Loading details...</p>
+				</div>
+
+			)
+		}
+		if(status === 'LOADED') {
+			return (
+				<div className="pokemon-container">
+					<img src={img} alt={name}/>
+					<h5>{name}</h5>
+					<Description {...details}/>
+					<a href="#" className="card-link" onClick={this.onHideClick}>Hide details</a>
+				</div>
+			)
+		}
 	}
 }
