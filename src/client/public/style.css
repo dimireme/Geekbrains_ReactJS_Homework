@@ -1,0 +1,34 @@
+html,
+body,
+#app {
+    height: 100%;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+}
+
+main,
+footer {
+    padding: 0 20px;
+}
+
+main {
+    flex-grow: 1;
+    background-color: azure;
+}
+
+footer {
+    line-height: 3em;
+}
+
+.pokemon-small {
+    overflow: hidden;
+}
+.pokemon-small img {
+    width: 50px;
+    transform: scale(2);
+    padding: 0 5px;
+}
