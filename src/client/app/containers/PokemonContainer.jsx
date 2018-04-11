@@ -1,14 +1,15 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import Pokemon from '../components/Pokemon';
+import PokemonCardHeader from '../components/PokemonCardHeader';
+import PokemonCardDetails from '../components/PokemonCardDetails';
+import DisplayMore from '../components/DisplayMore';
 
-/*
-	В state компонента есть парамер status, который принимает значения:
-        'HIDE' - не показывать детальную информацию о покемоне
-        'LOADING' - показать сообщение о начале загрузки
-        'LOADED' - показать детальную информацию о покемоне
- */
+/* Константы для параметра status. Определяют отображается ли детальная информация о покемоне. */
+const HIDE = 'HIDE';        // не показывать детальную информацию
+const LOADING = 'LOADING';  // показать сообщение о начале загрузки
+const LOADED = 'LOADED';    // показать детальную информацию о покемоне
+
 export default class PokemonContainer extends PureComponent {
 	static propTypes = {
 		pokemon: PropTypes.shape({
@@ -24,46 +25,72 @@ export default class PokemonContainer extends PureComponent {
 
 		this.state = {
 			pokemon: {...props.pokemon, details: undefined},
-			status: 'HIDE'
+			status: HIDE
 		}
 	}
 
 	detailsShowHandler = (detailsSource) => {
+		// Если данные уже есть в state, меняем флаг status, компонент перерисуется с данными из state.
 		if(this.state.pokemon.details) {
-			// Если данные уже есть в state, меняем флаг status, компонент перерисуется с данными из state.
 			this.setState({
-				status: 'LOADED'
+				status: LOADED
 			});
-		} else {
-			// Выводим сообщение о том что загрузка началась.
-			this.setState({
-				status: 'LOADING'
-			});
+			return;
+		}
 
-			fetch(detailsSource)
+		// Выводим сообщение о том что загрузка началась.
+		this.setState({
+			status: LOADING
+		});
+
+		fetch(detailsSource)
 			.then(res => res.json())
 			.then(details => {
 				this.setState((prevState) => {
 					return {
-						pokemon: {...prevState.pokemon, details: details.effect_entries[0]},
-						status: 'LOADED'
+						pokemon: {...prevState.pokemon, details},
+						status: LOADED
 					};
 				});
 			})
 			.catch(err => console.log(`Failed pokemon-details fetch: ${err}`));
-		}
 	};
 
 	detailsHideHandler = () => {
-		// Просто прячем описание, данные остаются в state.
+		// Прячем описание, детали остаются в state.
 		this.setState({
-			status: 'HIDE'
+			status: HIDE
 		});
 	};
 
 	render() {
-		return (
-			<Pokemon {...this.state} detailsShowHandler={this.detailsShowHandler} detailsHideHandler={this.detailsHideHandler} />
-		);
+		const { pokemon, status } = this.state;
+
+		if(status === HIDE) {
+			return (
+				<div>
+					<PokemonCardHeader {...pokemon} />
+					<DisplayMore clickHandler={this.detailsShowHandler} argument={pokemon.detailsSource}/>
+				</div>
+			)
+		}
+
+		if(status === LOADING) {
+			return (
+				<div>
+					<PokemonCardHeader {...pokemon} />
+					<span>Loading...</span>
+				</div>
+			)
+		}
+
+		if(status === LOADED) {
+			return (
+				<div>
+					<PokemonCardHeader {...pokemon} />
+					<PokemonCardDetails {...pokemon} detailsHideHandler={this.detailsHideHandler}/>
+				</div>
+			)
+		}
 	}
 }
