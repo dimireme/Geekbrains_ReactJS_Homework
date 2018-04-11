@@ -36,4 +36,15 @@
 
 2. Шаблон использует стили **bootstrap 3**, поэтому их нужно подключить в выходном файле index.html.
 
-`<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">`  
+`<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">`
+
+## 4. Взаимодействия в React.JS
+## 5. Всплытие событий onClick к родительскому компоненту.
+
+### Что нового?
+1. Обновлен компонент Header, теперь работает без ошибок.
+2. В тело сайта выведен список покемонов, загружаемый с www.pokeapi.co
+3. Добавлен функционал, подгружающий дополнительную информацию о покемоне.
+
+### Где посмотреть?
+На страничке проекта https://dimireme.github.io/Geekbrains_ReactJS_Homework/
