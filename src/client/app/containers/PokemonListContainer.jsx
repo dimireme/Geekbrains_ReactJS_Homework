@@ -18,14 +18,14 @@ export default class PokemonListContainer extends PureComponent {
 			isLoaded: false
 		});
 
-		fetch(`https://www.pokeapi.co/api/v2/pokemon/?limit=5&offset=20`)
-			.then(res => res.json())
-			.then(query => {
-				this.setState({
-					isLoaded: true,
-					pokemons: query.results.map(normalizePokemon)
-				});
+		fetch(`https://www.pokeapi.co/api/v2/ability/?limit=5&offset=20`)
+		.then(res => res.json())
+		.then(query => {
+			this.setState({
+				isLoaded: true,
+				pokemons: query.results.map(normalizePokemon)
 			});
+		});
 	}
 
 	render() {

@@ -15,6 +15,10 @@ export default class PokemonList extends PureComponent {
 		)
 	};
 
+	constructor(props) {
+		super(props);
+	}
+
 	render() {
 		const { pokemons } = this.props;
 		return (

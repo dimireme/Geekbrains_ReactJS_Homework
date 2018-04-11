@@ -8,6 +8,10 @@ import Main from './components/Main';
 import Footer from './components/Footer';
 
 class App extends Component {
+	constructor(props) {
+		super(props);
+	}
+
 	render() {
 		return (
 			<div className="container">

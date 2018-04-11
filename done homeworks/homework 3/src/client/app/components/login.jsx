@@ -24,10 +24,12 @@ export default class Login extends Component {
 	}
 
 	handleSubmit() {
+		//  TODO: Do something with Submit button
 		this.setState({ show: false });
 	}
 
 	handleRegistration() {
+		//  TODO: Do something with Registration button
 		this.setState({ show: false });
 	}
 
