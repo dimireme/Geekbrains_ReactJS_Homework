@@ -1,25 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+import App from './App';
 
-import HeaderContainer from './containers/HeaderContainer';
-import Main from './components/Main';
-import Footer from './components/Footer';
-
-class App extends Component {
-	render() {
-		return (
-			<div className="container">
-				<HeaderContainer />
-				<Main />
-				<Footer />
-			</div>
-		);
-	}
-}
-
-ReactDOM.render(
-	<App />,
-	document.getElementById('app')
-);
+ReactDOM.render((
+	<BrowserRouter>
+		<App />
+	</BrowserRouter>
+), document.getElementById('app'));

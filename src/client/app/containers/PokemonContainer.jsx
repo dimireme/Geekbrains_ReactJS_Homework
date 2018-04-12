@@ -15,7 +15,7 @@ export default class PokemonContainer extends PureComponent {
 		pokemon: PropTypes.shape({
 			img: PropTypes.string.isRequired,
 			name: PropTypes.string.isRequired,
-			id: PropTypes.number,
+			id: PropTypes.number.isRequired,
 			detailsSource: PropTypes.string.isRequired
 		})
 	};
