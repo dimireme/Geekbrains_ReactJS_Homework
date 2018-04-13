@@ -1,27 +1,32 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
-export default class PokemonCardDetails extends PureComponent {
+export default class PokemonPage extends PureComponent {
 	static propTypes = {
-		pokemon: PropTypes.shape({
-			img: PropTypes.string.isRequired,
-			name: PropTypes.string.isRequired,
-			id: PropTypes.number,
-			details: PropTypes.object.isRequired
-		})
+		img: PropTypes.string.isRequired,
+		name: PropTypes.string.isRequired,
+		id: PropTypes.number,
+		abilities: PropTypes.array,
+		stats: PropTypes.array,
+		weight:  PropTypes.number,
+		sprites:  PropTypes.object,
+		held_items:  PropTypes.array,
+		height:  PropTypes.number,
+		base_experience:  PropTypes.number,
 	};
 
 	render() {
-		const { img, name } = this.props;
-		const { weight, height, base_experience, abilities, held_items } = this.props.details;
+		const { img, name, weight, height, base_experience, abilities, held_items } = this.props;
 
 		return (
 			<div>
-				<a href="#">Return to the pokemons list.</a>
+				<Link to={'/'}>Return to the pokemons list</Link>
 
 				<div className="pokemon-page-header">
 					<span><img src={img} alt={name}/> {name}</span>
 				</div>
+
 				<div className="pokemon-page-details">
 					<h5>Basic stats:</h5>
 					<ul>

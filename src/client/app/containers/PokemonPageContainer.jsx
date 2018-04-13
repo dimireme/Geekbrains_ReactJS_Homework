@@ -1,26 +1,34 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 
 import PokemonPage from '../components/PokemonPage';
 
 export default class PokemonContainer extends PureComponent {
-
 	constructor(props) {
 		super(props);
-		
-		console.log(`constructor: ${props}`);
+
 		this.state = {
+			pokemon: {},
 			isLoaded: true
 		}
 	}
 
 	componentWillMount() {
-		console.log(`mounted: ${this.props}`);
 		this.setState({
 			isLoaded: false
 		});
 
-		console.log(this.props);
+		const id = this.props.match.params.id;
+
+		fetch(`https://www.pokeapi.co/api/v2/pokemon/${id}/`)
+			.then(res => res.json())
+			.then(pokemon => {
+				pokemon.img = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+				console.log(pokemon);
+				this.setState({
+					isLoaded: true,
+					pokemon
+				});
+			});
 	}
 
 	render() {
@@ -28,10 +36,9 @@ export default class PokemonContainer extends PureComponent {
 
 		return (
 			<div>
-				{isLoaded ? <PokemonPage {...pokemon}/> : 'Loading...'}
+				{isLoaded ? <PokemonPage {...pokemon}/> : 'Loading pokemon...'}
 			</div>
 		)
-
 	}
-
 }
+

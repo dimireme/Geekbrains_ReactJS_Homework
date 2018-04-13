@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Link, Route } from 'react-router-dom';
-import Footer from './Footer';
+import { Link } from 'react-router-dom';
 
 export default class PokemonCardHeader extends PureComponent {
 	static propTypes = {
@@ -15,8 +14,9 @@ export default class PokemonCardHeader extends PureComponent {
 
 		return (
 			<div className="pokemon-card-header">
-				<Link to={`/pokemon/${id}`}><span><img src={img} alt={name}/> {name}</span></Link>
-				<Route path="/pokemon/:id" component={Footer}/>
+				<Link to={`/pokemon/${id}`}>
+					<span><img src={img} alt={name}/> {name}</span>
+				</Link>
 			</div>
 		)
 	}
