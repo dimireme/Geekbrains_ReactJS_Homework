@@ -1,5 +1,10 @@
 import React from 'react';
 
+/**
+ * @param {number}  weight              Pokemon's weight.
+ * @param {number}  height              Pokemon's height.
+ * @param {number}  base_experience     Base Pokemon's experience.
+ */
 export default function ({ weight, height, base_experience }) {
 	return (
 		<div>
