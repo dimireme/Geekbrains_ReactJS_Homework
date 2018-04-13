@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function ({ weight, height, base_experience, abilities, held_items }) {
+export default function ({ weight, height, base_experience, stats, abilities, held_items }) {
 	return (
 		<div>
 			<h5>Basic stats:</h5>
@@ -8,6 +8,11 @@ export default function ({ weight, height, base_experience, abilities, held_item
 				<li>Weight: {weight}</li>
 				<li>Height: {height}</li>
 				<li>Experience: {base_experience}</li>
+			</ul>
+
+			<h5>Stats:</h5>
+			<ul>
+				{stats.map((stat, i) => <li key={i}>{stat.stat.name} : {stat.base_stat}</li>)}
 			</ul>
 
 			<h5>Available abilities:</h5>

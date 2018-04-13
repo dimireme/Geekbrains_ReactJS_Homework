@@ -1,8 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import LinkShowDetails from '../components/LinkShowDetails';
-import LinkHideDetails from '../components/LinkHideDetails';
+import EventLink from '../components/EventLink';
 import PokemonTitle from '../components/PokemonTitle';
 import PokemonShortDescription from '../components/PokemonShortDescription';
 
@@ -71,7 +70,7 @@ export default class PokemonContainer extends PureComponent {
 			return (
 				<div>
 					<PokemonTitle {...pokemon}/>
-					<LinkShowDetails clickHandler={this.detailsShowHandler} argument={pokemon.detailsSource}/>
+					<EventLink clickHandler={this.detailsShowHandler} argument={pokemon.detailsSource} text={'Display details...'}/>
 				</div>
 			)
 		}
@@ -90,7 +89,7 @@ export default class PokemonContainer extends PureComponent {
 				<div>
 					<PokemonTitle {...pokemon}/>
 					<PokemonShortDescription {...pokemon}/>
-					<LinkHideDetails clickHandler={this.detailsHideHandler} />
+					<EventLink clickHandler={this.detailsHideHandler} argument={pokemon.detailsSource} text={'Hide details'}/>
 				</div>
 			)
 		}

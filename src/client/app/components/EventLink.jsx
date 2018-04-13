@@ -1,13 +1,14 @@
 import React, { PureComponent }  from 'react';
 import PropTypes from 'prop-types';
 
-export default class LinkShowDetails extends PureComponent{
+export default class EventLink extends PureComponent{
 	static propTypes = {
 		clickHandler: PropTypes.func.isRequired,
-		argument: PropTypes.string.isRequired
+		argument: PropTypes.string,
+		text: PropTypes.string.isRequired,
 	};
 
-	onShowClick = (e) => {
+	onHideClick = (e) => {
 		const { clickHandler, argument } = this.props;
 
 		if (typeof clickHandler === 'function') {
@@ -18,8 +19,9 @@ export default class LinkShowDetails extends PureComponent{
 	};
 
 	render() {
+		const { text } = this.props;
 		return (
-			<a href="#" onClick={this.onShowClick}>Display more...</a>
+			<a href="#" onClick={this.onHideClick}>{text}</a>
 		)
 	}
 }
