@@ -23,7 +23,6 @@ export default class PokemonContainer extends PureComponent {
 			.then(res => res.json())
 			.then(pokemon => {
 				pokemon.img = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
-				console.log(pokemon);
 				this.setState({
 					isLoaded: true,
 					pokemon
@@ -36,7 +35,7 @@ export default class PokemonContainer extends PureComponent {
 
 		return (
 			<div>
-				{isLoaded ? <PokemonPage {...pokemon}/> : 'Loading pokemon...'}
+				{isLoaded ? <PokemonPage pokemon={pokemon} /> : 'Loading pokemon...'}
 			</div>
 		)
 	}

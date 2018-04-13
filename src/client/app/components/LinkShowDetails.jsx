@@ -1,7 +1,7 @@
 import React, { PureComponent }  from 'react';
 import PropTypes from 'prop-types';
 
-export default class DisplayMore extends PureComponent{
+export default class LinkShowDetails extends PureComponent{
 	static propTypes = {
 		clickHandler: PropTypes.func.isRequired,
 		argument: PropTypes.string.isRequired

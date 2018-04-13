@@ -1,26 +1,20 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 
 import PokemonContainer from '../containers/PokemonContainer';
 
-export default class PokemonList extends PureComponent {
-	static propTypes = {
-		pokemons: PropTypes.arrayOf(
-			PropTypes.shape({
-				img: PropTypes.string.isRequired,
-				name: PropTypes.string.isRequired,
-				id: PropTypes.number.isRequired,
-				detailsSource: PropTypes.string.isRequired
-			})
-		)
-	};
+/*pokemons: PropTypes.arrayOf(
+	PropTypes.shape({
+		img: PropTypes.string.isRequired,
+		name: PropTypes.string.isRequired,
+		id: PropTypes.number.isRequired,
+		detailsSource: PropTypes.string.isRequired
+	})
+)*/
 
-	render() {
-		const { pokemons } = this.props;
-		return (
-			<div>
-				{pokemons.map((pokemon, i) => <PokemonContainer pokemon={pokemon} key={i} />)}
-			</div>
-		);
-	}
+export default function({ pokemons }) {
+	return (
+		<div>
+			{pokemons.map((pokemon, i) => <PokemonContainer pokemon={pokemon} key={i} />)}
+		</div>
+	);
 }
