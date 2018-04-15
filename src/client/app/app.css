@@ -1,0 +1,17 @@
+html,
+body,
+body > div:first-child {    /*вместо #app , который подменяется css-loader-ом*/
+    height: 100%;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+}
+
+main {
+    padding: 0 20px;
+    flex-grow: 1;
+    background-color: azure;
+}
