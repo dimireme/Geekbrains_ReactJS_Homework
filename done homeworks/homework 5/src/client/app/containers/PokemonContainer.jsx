@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import EventLink from '../components/EventLink';
-import PokemonTitle from '../components/PokemonTitle';
-import PokemonShortDescription from '../components/PokemonShortDescription';
+import PokemonCardHeader from '../components/PokemonCardHeader';
+import PokemonCardDetails from '../components/PokemonCardDetails';
+import DisplayMore from '../components/DisplayMore';
 
 /* Константы для параметра status. Определяют отображается ли детальная информация о покемоне. */
 const HIDE = 'HIDE';        // не показывать детальную информацию
@@ -15,8 +15,8 @@ export default class PokemonContainer extends PureComponent {
 		pokemon: PropTypes.shape({
 			img: PropTypes.string.isRequired,
 			name: PropTypes.string.isRequired,
-			id: PropTypes.number.isRequired,
-			detailsSource: PropTypes.string.isRequired,
+			id: PropTypes.number,
+			detailsSource: PropTypes.string.isRequired
 		})
 	};
 
@@ -24,14 +24,14 @@ export default class PokemonContainer extends PureComponent {
 		super(props);
 
 		this.state = {
-			pokemon: {...props.pokemon, isCached: false},
+			pokemon: {...props.pokemon, details: undefined},
 			status: HIDE
 		}
 	}
 
 	detailsShowHandler = (detailsSource) => {
 		// Если данные уже есть в state, меняем флаг status, компонент перерисуется с данными из state.
-		if(this.state.pokemon.isCached) {
+		if(this.state.pokemon.details) {
 			this.setState({
 				status: LOADED
 			});
@@ -48,7 +48,7 @@ export default class PokemonContainer extends PureComponent {
 			.then(details => {
 				this.setState((prevState) => {
 					return {
-						pokemon: {...prevState.pokemon, ...details, isCached: true},
+						pokemon: {...prevState.pokemon, details},
 						status: LOADED
 					};
 				});
@@ -69,8 +69,8 @@ export default class PokemonContainer extends PureComponent {
 		if(status === HIDE) {
 			return (
 				<div>
-					<PokemonTitle {...pokemon}/>
-					<EventLink clickHandler={this.detailsShowHandler} argument={pokemon.detailsSource} text={'Display details...'}/>
+					<PokemonCardHeader {...pokemon} />
+					<DisplayMore clickHandler={this.detailsShowHandler} argument={pokemon.detailsSource}/>
 				</div>
 			)
 		}
@@ -78,7 +78,7 @@ export default class PokemonContainer extends PureComponent {
 		if(status === LOADING) {
 			return (
 				<div>
-					<PokemonTitle {...pokemon}/>
+					<PokemonCardHeader {...pokemon} />
 					<span>Loading...</span>
 				</div>
 			)
@@ -87,9 +87,8 @@ export default class PokemonContainer extends PureComponent {
 		if(status === LOADED) {
 			return (
 				<div>
-					<PokemonTitle {...pokemon}/>
-					<PokemonShortDescription {...pokemon}/>
-					<EventLink clickHandler={this.detailsHideHandler} argument={pokemon.detailsSource} text={'Hide details'}/>
+					<PokemonCardHeader {...pokemon} />
+					<PokemonCardDetails {...pokemon} detailsHideHandler={this.detailsHideHandler}/>
 				</div>
 			)
 		}

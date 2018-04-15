@@ -1,7 +1,5 @@
 import React from 'react';
 
-import './footer.css';
-
 export default function () {
 	return (
 		<footer className="bg-dark text-center">

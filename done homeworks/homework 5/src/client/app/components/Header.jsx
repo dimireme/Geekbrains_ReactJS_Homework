@@ -4,15 +4,20 @@ import PropTypes from 'prop-types';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Nav, Navbar, NavbarBrand, NavLink } from 'reactstrap';
 
-import style from './header.css';
-
-import PokemonTitle from './PokemonTitle';
-import PokemonShortDescription from './PokemonShortDescription';
+import Description from './Description';
 
 export default class Header extends PureComponent {
 	static propTypes = {
 		links: PropTypes.array.isRequired,
-		pokemon: PropTypes.object,
+		pokemon: PropTypes.shape({
+			img: PropTypes.string.isRequired,
+			name: PropTypes.string.isRequired,
+			id: PropTypes.number.isRequired,
+			effects: PropTypes.shape({
+				short_effect: PropTypes.string.isRequired,
+				effect: PropTypes.string.isRequired
+			})
+		}),
 	};
 
 	constructor(props) {
@@ -35,21 +40,21 @@ export default class Header extends PureComponent {
 		const { pokemon, links } = this.props;
 		const { modal } = this.state;
 		return (
-			<Navbar className={`${style.container} navbar-dark bg-dark`}>
+			<Navbar className="navbar-dark bg-dark">
 				<Modal isOpen={modal} toggle={this.toggle} >
 					<ModalHeader toggle={this.toggle} className="pokemon-small">
-						<PokemonTitle {...pokemon} noLink={true} />
+						<img src={pokemon.img} alt={pokemon.name}/> {pokemon.name}
 					</ModalHeader>
 					<ModalBody>
-						<PokemonShortDescription {...pokemon}/>
+						<Description {...pokemon.effects} />
 					</ModalBody>
 					<ModalFooter>
 						<Button color="secondary" onClick={this.toggle}>Cancel</Button>
 					</ModalFooter>
 				</Modal>
 
-				<NavbarBrand href="/" onClick={this.toggle} >
-					<PokemonTitle {...pokemon} noLink={true} />
+				<NavbarBrand href="/" onClick={this.toggle} className="pokemon-small" >
+					<img src={pokemon.img} alt={pokemon.name}/> {pokemon.name}
 				</NavbarBrand>
 
 				<Nav className="ml-auto">

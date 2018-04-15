@@ -8,27 +8,26 @@ export default class HeaderContainer extends PureComponent {
 
 		this.state = {
 			links: defaultLinks,
-			pokemon: {
-				name: 'Unknown',
-				img: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png',
-			}
+			pokemon: defaultPokemon,
 		};
 	};
 
 	componentWillMount() {
 		const id = Math.floor(Math.random() * 200) + 1;
 
-		fetch(`https://www.pokeapi.co/api/v2/pokemon/${id}`)
+		fetch(`https://www.pokeapi.co/api/v2/ability/${id}`)
 		.then(res => res.json())
 		.then(pokemon => {
 			this.setState({
 				pokemon: {
-					...pokemon,
-					img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`,
-				}
+					name: pokemon.name,
+					img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`,
+					id: pokemon.id,
+					effects: pokemon.effect_entries[0]
+				},
 			})
 		})
-		.catch(err => console.log(`Failed pokemon fetch in header: ${err}`))
+		.catch(err => console.log(`Failed pokemon-form fetch: ${err}`))
 	}
 
 	render() {
@@ -44,3 +43,13 @@ const defaultLinks = [
 	{ text: 'Правила игры', link: '#' },
 	{ text: 'Контакты',	    link: '#' }
 ];
+
+const defaultPokemon = {
+	name: 'Unknown',
+	img: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/0.png',
+	id: 0,
+	effects: {
+		short_effect: '',
+		effect: ''
+	}
+};
