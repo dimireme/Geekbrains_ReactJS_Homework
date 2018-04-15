@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import style from './pokemonTitle.css';
+
 /**
  * @param {string}  img     Pokemon's image source.
  * @param {string}  name    Pokemon's name.
@@ -9,13 +11,13 @@ import { Link } from 'react-router-dom';
  */
 export default function({ img, name, id, noLink=false }) {
 	if(noLink) return (
-		<div>
+		<div className={style.container}>
 			<img src={img} alt={name}/> {name}
 		</div>
 	);
 
 	return (
-		<div>
+		<div className={style.container}>
 			<Link to={`/pokemon/${id}`}>
 				<img src={img} alt={name}/> {name}
 			</Link>

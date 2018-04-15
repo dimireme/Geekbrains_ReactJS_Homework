@@ -13,8 +13,10 @@ module.exports = merge(common, {
 
 	module: {
 		rules: [
+			// Правило для локальных стилей, тех что прописаны в наших файлах .css
 			{
 				test: /\.css$/,
+				include: path.join(__dirname, 'src', 'client', 'app'),
 				use: [
 					// mini-css-extract-plugin собирает стили в один файл, чтобы стили были не инлайновые.
 					// Имя файла задается в конструкторе при объявлении плагина (см. ниже).
@@ -26,11 +28,16 @@ module.exports = merge(common, {
 						loader: 'css-loader',
 						options: {
 							modules: true,
-							//include: /node_modules/,
-							localIdentName: '[path][name]__[local]--[hash:base64:5]'
+							localIdentName: '[name]__[local]--[hash:base64:5]'
 						}
 					}
 				],
+			},
+			// Правила подключения внешних стилей bootstrap. Не подменяем имена селекторов.
+			{
+				test: /\.css$/,
+				include: /node_modules/,
+				use: [ MiniCssExtractPlugin.loader, 'css-loader' ]
 			}
 		]
 	},

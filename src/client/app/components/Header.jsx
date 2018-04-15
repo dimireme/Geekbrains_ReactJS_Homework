@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Nav, Navbar, NavbarBrand, NavLink } from 'reactstrap';
 
+import style from './header.css';
+
 import PokemonTitle from './PokemonTitle';
 import PokemonShortDescription from './PokemonShortDescription';
 
@@ -33,7 +35,7 @@ export default class Header extends PureComponent {
 		const { pokemon, links } = this.props;
 		const { modal } = this.state;
 		return (
-			<Navbar className="navbar-dark bg-dark">
+			<Navbar className={`${style.container} navbar-dark bg-dark`}>
 				<Modal isOpen={modal} toggle={this.toggle} >
 					<ModalHeader toggle={this.toggle} className="pokemon-small">
 						<PokemonTitle {...pokemon} noLink={true} />
@@ -46,7 +48,7 @@ export default class Header extends PureComponent {
 					</ModalFooter>
 				</Modal>
 
-				<NavbarBrand href="/" onClick={this.toggle} className="pokemon-small" >
+				<NavbarBrand href="/" onClick={this.toggle} >
 					<PokemonTitle {...pokemon} noLink={true} />
 				</NavbarBrand>
 

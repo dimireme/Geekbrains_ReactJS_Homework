@@ -1,6 +1,6 @@
 html,
 body,
-#app {
+body > div:first-child {    /*вместо #app , который подменяется css-loader-ом*/
     height: 100%;
 }
 
@@ -12,11 +12,6 @@ body,
 
 main {
     padding: 0 20px;
-}
-
-main {
     flex-grow: 1;
     background-color: azure;
 }
-
-

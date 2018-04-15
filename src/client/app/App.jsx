@@ -6,13 +6,15 @@ import PokemonListContainer from './containers/PokemonListContainer';
 import PokemonPageContainer from './containers/PokemonPageContainer';
 import Footer from './components/Footer';
 
-import style from './app.css';
+// Локальные стили подключаем через style.class.
+// Стили от bootstrap подключаем как есть по документации.
+import styles from './app.css';
 
 export default class App extends PureComponent {
 	render() {
 		return (
 			<BrowserRouter>
-				<div className="container">
+				<div className={`${styles.container} container`}>
 					<HeaderContainer />
 					<main>
 						<Route exact path="/" component={PokemonListContainer}/>

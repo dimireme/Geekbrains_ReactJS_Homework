@@ -5,12 +5,6 @@ const path = require('path');
 
 module.exports = merge(common, {
 
-	// Выходной bundle будет только минимизирован.
-	mode: 'development',
-
-	// Выбор стиля source-map файлов.
-	devtool: 'source-map',
-
 	// Конфиг для webpack-dev-server. В contentBase указывается путь, который будет доступен по http://localhost:port
 	// Команда на запуск сервера прописана в package.json: `npm run start:dev`
 	devServer: {
@@ -21,20 +15,29 @@ module.exports = merge(common, {
 
 	module: {
 		rules: [
-			// style-loader собирает все стили в head выходного html файла.
+			// Правило для локальных стилей, тех что прописаны в наших файлах .css
 			{
 				test: /\.css$/,
+				include: path.join(__dirname, 'src', 'client', 'app'),
 				use: [
+					// style-loader собирает все стили в head выходного html файла.
 					'style-loader',
+					// css-loader позволяет работать с файлами стилей как с модулями.
+					// Имена стилей заменяются по шаблону в localIdentName
 					{
 						loader: 'css-loader',
 						options: {
 							modules: true,
-							include: /node_modules/,
-							localIdentName: '[path][name]__[local]--[hash:base64:5]'
+							localIdentName: '[name]__[local]--[hash:base64:5]'
 						}
 					}
 				]
+			},
+			// Правила подключения внешних стилей bootstrap. Не подменяем имена селекторов.
+			{
+				test: /\.css$/,
+				include: /node_modules/,
+				use: [ 'style-loader', 'css-loader' ]
 			}
 		]
 	}

@@ -11,6 +11,13 @@ module.exports = {
 		filename: 'bundle.js'
 	},
 
+	// Выбор стиля source-map файлов.
+	// Возможно стоит перенести в webpack.dev.js, зачем на продакшене source-map?
+	devtool: 'source-map',
+
+	// Выходной bundle будет только минимизирован.
+	mode: 'development',
+
 	// Какие расширения файлов могут подключаться в проекте через import
 	resolve: {
 		extensions: ['.js', '.jsx']
@@ -25,7 +32,7 @@ module.exports = {
 				test: /\.jsx?/,
 				include: path.join(__dirname, 'src', 'client', 'app'),
 				use: 'babel-loader'
-			},
+			}
 		]
 	}
 };
