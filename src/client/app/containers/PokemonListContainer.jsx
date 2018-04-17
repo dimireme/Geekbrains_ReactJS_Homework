@@ -1,45 +1,52 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import PokemonList from '../components/PokemonList';
+import { loadPokemons } from '../actions/Pokemons';
 
-export default class PokemonListContainer extends PureComponent {
-	constructor(props) {
-		super(props);
+class PokemonListContainer extends PureComponent {
 
-		this.state = {
-			pokemons: [],
-			isLoaded: false,
-			page: 1
-		};
-	}
-
+	// ВОПРОС!!!
+	// Это правильно что берем функцию из props?
+	// Как можно было бы вызвать экшн loadPokemons(dispatch) напрямую?
 	componentWillMount() {
-		this.setState({
-			isLoaded: false
-		});
-
-		fetch(`https://www.pokeapi.co/api/v2/pokemon/?limit=5&offset=20`)
-			.then(res => res.json())
-			.then(query => {
-				this.setState({
-					isLoaded: true,
-					pokemons: query.results.map(normalizePokemon)
-				});
-			});
+		this.props.load();
 	}
+
+	static propTypes = {
+		pokemons: PropTypes.arrayOf(
+			PropTypes.shape({
+				name: PropTypes.string,
+				img: PropTypes.string,
+				id: PropTypes.number,
+				detailsSource: PropTypes.string,
+			})
+		),
+		error: PropTypes.string,
+		isLoaded: PropTypes.bool,
+		load: PropTypes.func
+	};
 
 	render() {
-		const { isLoaded, pokemons } = this.state;
-		return isLoaded ? <PokemonList pokemons={pokemons} /> : 'Loading pokemon list...'
+		const { pokemons, isLoaded, error } = this.props;
+		if(error) return `Fail pokemon's loading: ${error}`;
+		return isLoaded ? <PokemonList pokemons={pokemons} /> : 'Loading';
 	}
 }
 
-const normalizePokemon = (pokemon) => {
-	const id = pokemon.url.match(/\/(\d+)\//).pop();
+function mapStateToProps(state) {
 	return {
-		name: pokemon.name,
-		img: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`,
-		id: +id,
-		detailsSource: pokemon.url
-	};
-};
+		pokemons: state.pokemons.pokemons,
+		isLoaded: state.pokemons.isLoaded,
+		error: state.pokemons.error,
+	}
+}
+
+function mapDispatchToProps(dispatch) {
+	return {
+		load: () => loadPokemons(dispatch)
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PokemonListContainer);
