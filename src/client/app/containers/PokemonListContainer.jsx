@@ -3,17 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import PokemonList from '../components/PokemonList';
-import { loadPokemons } from '../actions/Pokemons';
+import { loadPokemons } from '../actions/pokemons';
 
 class PokemonListContainer extends PureComponent {
-
-	// ВОПРОС!!!
-	// Это правильно что берем функцию из props?
-	// Как можно было бы вызвать экшн loadPokemons(dispatch) напрямую?
-	componentWillMount() {
-		this.props.load();
-	}
-
 	static propTypes = {
 		pokemons: PropTypes.arrayOf(
 			PropTypes.shape({
@@ -21,16 +13,24 @@ class PokemonListContainer extends PureComponent {
 				img: PropTypes.string,
 				id: PropTypes.number,
 				detailsSource: PropTypes.string,
+				isHide: PropTypes.bool,
+				error: PropTypes.string,
 			})
 		),
 		error: PropTypes.string,
 		isLoaded: PropTypes.bool,
-		load: PropTypes.func
+		loadPokemons: PropTypes.func
 	};
+
+	componentWillMount() {
+		this.props.loadPokemons();
+	}
 
 	render() {
 		const { pokemons, isLoaded, error } = this.props;
-		if(error) return `Fail pokemon's loading: ${error}`;
+
+		if(error) return `Fail pokemons loading: ${error}`;
+
 		return isLoaded ? <PokemonList pokemons={pokemons} /> : 'Loading';
 	}
 }
@@ -45,7 +45,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return {
-		load: () => loadPokemons(dispatch)
+		loadPokemons: () => loadPokemons(dispatch),
 	}
 }
 

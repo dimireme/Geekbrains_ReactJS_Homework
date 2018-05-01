@@ -1,97 +1,62 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import EventLink from '../components/EventLink';
 import PokemonTitle from '../components/PokemonTitle';
 import PokemonShortDescription from '../components/PokemonShortDescription';
+import { loadDetails, hideDetails } from '../actions/details';
 
-/* Константы для параметра status. Определяют отображается ли детальная информация о покемоне. */
-const HIDE = 'HIDE';        // не показывать детальную информацию
-const LOADING = 'LOADING';  // показать сообщение о начале загрузки
-const LOADED = 'LOADED';    // показать детальную информацию о покемоне
-
-export default class PokemonContainer extends PureComponent {
+class PokemonContainer extends PureComponent {
 	static propTypes = {
 		pokemon: PropTypes.shape({
 			img: PropTypes.string.isRequired,
 			name: PropTypes.string.isRequired,
 			id: PropTypes.number.isRequired,
 			detailsSource: PropTypes.string.isRequired,
-		})
-	};
-
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			pokemon: {...props.pokemon, isCached: false},
-			status: HIDE
-		}
-	}
-
-	detailsShowHandler = (detailsSource) => {
-		// Если данные уже есть в state, меняем флаг status, компонент перерисуется с данными из state.
-		if(this.state.pokemon.isCached) {
-			this.setState({
-				status: LOADED
-			});
-			return;
-		}
-
-		// Выводим сообщение о том что загрузка началась.
-		this.setState({
-			status: LOADING
-		});
-
-		fetch(detailsSource)
-			.then(res => res.json())
-			.then(details => {
-				this.setState((prevState) => {
-					return {
-						pokemon: {...prevState.pokemon, ...details, isCached: true},
-						status: LOADED
-					};
-				});
-			})
-			.catch(err => console.log(`Failed pokemon-details fetch: ${err}`));
-	};
-
-	detailsHideHandler = () => {
-		// Прячем описание, детали остаются в state.
-		this.setState({
-			status: HIDE
-		});
+			isHide: PropTypes.bool,
+			error: PropTypes.string,
+			details: PropTypes.object
+		}),
+		loadDetails: PropTypes.func,
+		hideDetails: PropTypes.func,
 	};
 
 	render() {
-		const { pokemon, status } = this.state;
+		const { pokemon, loadDetails, hideDetails } = this.props;
+		const { isHide, error, details } = pokemon;
 
-		if(status === HIDE) {
+		if(error) return (
+			<div>
+				<PokemonTitle {...pokemon}/>
+				<span>Fail pokemon's details loading: {error}</span>
+			</div>
+		);
+
+		if(isHide) {
 			return (
 				<div>
 					<PokemonTitle {...pokemon}/>
-					<EventLink clickHandler={this.detailsShowHandler} argument={pokemon.detailsSource} text={'Display details...'}/>
+					<EventLink clickHandler={loadDetails} argument={pokemon} text={'Display details...'}/>
 				</div>
 			)
-		}
-
-		if(status === LOADING) {
+		} else {
 			return (
 				<div>
 					<PokemonTitle {...pokemon}/>
-					<span>Loading...</span>
-				</div>
-			)
-		}
-
-		if(status === LOADED) {
-			return (
-				<div>
-					<PokemonTitle {...pokemon}/>
-					<PokemonShortDescription {...pokemon}/>
-					<EventLink clickHandler={this.detailsHideHandler} argument={pokemon.detailsSource} text={'Hide details'}/>
+					{details ? <PokemonShortDescription {...pokemon.details}/> : <span>Loading...</span>}
+					<EventLink clickHandler={hideDetails} argument={pokemon.id} text={'Hide details...'}/>
 				</div>
 			)
 		}
 	}
 }
+
+function mapDispatchToProps(dispatch) {
+	return {
+		loadDetails: (pokemon) => loadDetails(dispatch)(pokemon),
+		hideDetails: (pokemon) => hideDetails(dispatch)(pokemon),
+	}
+}
+
+export default connect(null, mapDispatchToProps)(PokemonContainer);

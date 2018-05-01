@@ -4,11 +4,14 @@ import PropTypes from 'prop-types';
 export default class EventLink extends PureComponent{
 	static propTypes = {
 		clickHandler: PropTypes.func.isRequired,
-		argument: PropTypes.string,
+		argument: PropTypes.oneOfType([
+			PropTypes.object,
+			PropTypes.number
+		]),
 		text: PropTypes.string.isRequired,
 	};
 
-	onHideClick = (e) => {
+	onEventLinkClick = (e) => {
 		const { clickHandler, argument } = this.props;
 
 		if (typeof clickHandler === 'function') {
@@ -21,7 +24,7 @@ export default class EventLink extends PureComponent{
 	render() {
 		const { text } = this.props;
 		return (
-			<a href="#" onClick={this.onHideClick}>{text}</a>
+			<a href="#" onClick={this.onEventLinkClick}>{text}</a>
 		)
 	}
 }
