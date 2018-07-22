@@ -13,7 +13,9 @@ mongoose.connect('mongodb://localhost:27017/test', { useNewUrlParser: true }).ca
 });
 
 app.get('/', (req, res) => {
-	res.send('Ok');
+	res.json({
+		message: 'Response from node server: ok'
+	});
 });
 
 app.get('/pokemons', (req, res) => {
@@ -23,10 +25,10 @@ app.get('/pokemons', (req, res) => {
 	})
 });
 
-app.get('/pokemon/:id', (req, res) => {
-	Pokemon.findOne({'id': req.params.id}, (err, pokemon) => {
+app.get('/pokemons/:id', (req, res) => {
+	Details.findOne({id: req.params.id}, (err, details) => {
 		if(err) return res.status(500).send(err.message);
-		res.json(pokemon);
+		res.json(details);
 	})
 });
 

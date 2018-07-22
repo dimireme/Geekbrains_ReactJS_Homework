@@ -6,9 +6,9 @@ const DetailsShema = new Shema({
 	weight: {type: Number },
 	height: {type: Number },
 	id: {type: Number },
-	base_experience: {type: Number },
+	base_experience: {type: Number }
 });
 
 const Details = mongoose.model('pokemonsdetails', DetailsShema);
 
-module.export = Details;
+module.exports = Details;
