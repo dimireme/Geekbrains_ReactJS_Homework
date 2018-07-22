@@ -1,0 +1,8 @@
+.container {
+    text-transform: capitalize;
+}
+
+.container img {
+    width: 75px;
+    padding: 0 5px;
+}
