@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 const Pokemon = require('./models/pokemon');
+const Details = require('./models/details');
 
 const app = express();
 app.use(cors());
@@ -23,7 +24,7 @@ app.get('/pokemons', (req, res) => {
 });
 
 app.get('/pokemon/:id', (req, res) => {
-	Pokemon.findById(req.params.id, (err, pokemon) => {
+	Pokemon.findOne({'id': req.params.id}, (err, pokemon) => {
 		if(err) return res.status(500).send(err.message);
 		res.json(pokemon);
 	})
