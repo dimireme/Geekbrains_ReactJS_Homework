@@ -1,0 +1,35 @@
+{
+    "name": "spearow",
+    "weight": 20,
+    "height": 3,
+    "id": 21,
+    "base_experience": 52
+}
+{
+    "name": "fearow",
+    "weight": 380,
+    "height": 12,
+    "id": 22,
+    "base_experience": 155
+}
+{
+    "name": "ekans",
+    "weight": 69,
+    "height": 20,
+    "id": 23,
+    "base_experience": 58
+}
+{
+    "name": "arbok",
+    "weight": 650,
+    "height": 35,
+    "id": 24,
+    "base_experience": 157
+}
+{
+    "name": "pikachu",
+    "weight": 60,
+    "height": 4,
+    "id": 25,
+    "base_experience": 112
+}
