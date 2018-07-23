@@ -6,7 +6,7 @@ const path = require('path');
 module.exports = merge(common, {
 
 	// Конфиг для webpack-dev-server. В contentBase указывается путь, который будет доступен по http://localhost:port
-	// Команда на запуск сервера прописана в package.json: `npm run start:dev`
+	// Команда на запуск сервера прописана в package.json: `npm run start`
 	devServer: {
 		contentBase: path.join(__dirname, 'src', 'client', 'dev'),
 		compress: true,
